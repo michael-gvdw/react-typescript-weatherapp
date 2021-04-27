@@ -10,7 +10,7 @@ export const Cities = [
         lat: 51.9225
     },
     {
-        name: 'Chios',
+        name: 'Eindhoven',
         lon: 5.4667,
         lat: 51.4333
     },

@@ -65,7 +65,7 @@ export type Daily = {
     pop: number;
     rain: number;
     uvi: number;
-}[]
+}
 
 // api return type
 export type WeatherData = {
@@ -74,7 +74,7 @@ export type WeatherData = {
     timezone: string;
     timezone_offset: number;
     current: Current;
-    daily: Daily;
+    daily: Daily[];
     alerts: Alert[];
 }
 
