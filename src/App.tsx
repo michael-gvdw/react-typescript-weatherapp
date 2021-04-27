@@ -1,61 +1,52 @@
-import { type } from 'node:os';
 import React, { useState, useEffect } from 'react';
 
+// Api
 import { fetchWeather } from './Api'
 
-export enum Units {
-  STANDARD = "standard",
-  METRIC = "metric",
-  IMPERIAL = "imperial"
-}
+// types
+import { Cities } from './Cities'
+import { WeatherData, Units } from './Types'
 
-export type DailyWeather = {
-  name: string;
-  main: {
-    feels_like: string;
-    humidity: number;
-    pressure: number;
-    temp: number;
-    temp_max: number;
-    temp_min: number;
-  };
-  weather: {
-    description: string;
-    icon: string;
-    main: string;
-  }[];
-  wind: {
-    deg: number;
-    speed: number;
-  }
-}
+// styles 
+import { Wrapper } from './App.styles'
 
+// components
+import Select from './components/Select/Select'
+import { LinearProgress } from '@material-ui/core';
 
-function App() {
+const App = () => {
 
-  const [city, setCity] = useState("")
-  const [weather, setWeather] = useState<DailyWeather>({} as DailyWeather)
-
+  const [isLoading, setIsLoading] = useState(false)
+  const [selectedCity, setSelectedCity] = useState(Cities[0].name)
+  const [weather, setWeather] = useState<WeatherData>({} as WeatherData)
 
   useEffect(() => {
-    const val = navigator.geolocation.getCurrentPosition(position => {
-      return position
-      // const { latitude, longitude } = position.coords;
-      // // Show a map centered at latitude / longitude.
-    });
-    console.log(val)
-    fetchCurrentWeather()
+    setIsLoading(true)
+    fetchWeatherData()
+    setIsLoading(false)
   }, [])
 
-  const fetchCurrentWeather = async () => {
-    const newWeather = await fetchWeather("Amsterdam", Units.METRIC) as DailyWeather
+  const fetchWeatherData = async () => {
+    const newWeather = await fetchWeather(selectedCity, Units.METRIC)
+    console.log(newWeather)
     setWeather(newWeather)
+  } 
+
+  const handleCityNameChange = (event: React.ChangeEvent<HTMLSelectElement>): void => {
+    const { value } = event.target
+    setSelectedCity(value)
   }
 
+  if (isLoading) return <LinearProgress />
+
   return (
-    <div>
-      weather app
-    </div>
+    <Wrapper>
+      <div className={`app`}>
+        <Select value={selectedCity} callback={handleCityNameChange} />
+        <div>hey</div>
+        <div>hey2</div>
+      </div>
+    </Wrapper>
   );
 }
 
