@@ -6,7 +6,7 @@ import { Cities } from './Cities'
  
 
 const EXCLUDE = ['minutely', 'hourly']
-const WEATHER_URI = 'http://api.openweathermap.org/data/2.5/onecall'
+const WEATHER_URI = 'https://api.openweathermap.org/data/2.5/onecall'
 const API_KEY = process.env.REACT_APP_WEATHER_API_KEY;
 
 export const fetchWeather = async (name: string, unit: Units): Promise<WeatherData> => {

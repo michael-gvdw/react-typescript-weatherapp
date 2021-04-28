@@ -14,7 +14,9 @@ import { Wrapper } from './App.styles'
 // components
 import Select from './components/Select/Select'
 import WeatherCard from './components/WeatherCard/WeatherCard'
-import { LinearProgress, Divider } from '@material-ui/core';
+import AlertNav from './components/AlertNav/AlertNav'
+import InfoNav from './components/InfoNav/InfoNav'
+import { LinearProgress } from '@material-ui/core';
 
 const App = () => {
 
@@ -42,11 +44,15 @@ const App = () => {
 
   return (
     <Wrapper>
+      <AlertNav alerts={weather.alerts} />
+
       <div className={`app`}>
         <Select value={selectedCity} callback={handleCityNameChange} />
         <hr />
         <WeatherCard weather={weather} city={selectedCity}/>
       </div> 
+
+      <InfoNav/>
     </Wrapper>    
   );
 }
